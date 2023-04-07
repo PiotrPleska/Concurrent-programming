@@ -3,7 +3,7 @@ using System.Runtime.CompilerServices;
 
 namespace Data
 {
- internal class Ball : IBall, IDisposable
+ public class Ball : IBall, IDisposable
   {
     public Ball(double Y, double X)
     {
@@ -16,8 +16,8 @@ namespace Data
     public double Y
     {
       get { return YBackingField; }
-      private set
-      {
+      set// zmienic na prywatne
+            {
         if (YBackingField == value)
           return;
         YBackingField = value;
@@ -28,7 +28,7 @@ namespace Data
     public double X
     {
       get { return XBackingField; }
-      private set
+       set // zmienic na prywatne 
       {
         if (XBackingField == value)
           return;
