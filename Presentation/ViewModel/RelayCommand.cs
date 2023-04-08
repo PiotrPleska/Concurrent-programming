@@ -26,10 +26,7 @@ namespace ViewModel
             return this.m_CanExecute();
         }
 
-        public virtual void Execute(object parameter)
-        {
-            this.m_Execute();
-        }
+        public virtual void Execute(object parameter) => this.m_Execute();
 
         public event EventHandler CanExecuteChanged;
 

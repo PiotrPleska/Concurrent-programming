@@ -50,7 +50,13 @@ namespace Model
 
         public override ObservableCollection<ModelBall> GetModelBalls()
         {
-            return this.ModelBalls;
+            List<BallsLogic> orbs = LogicAbstractAPI.GetBalls();
+            SGModelBalls.Clear();
+            foreach (BallsLogic orb in orbs)
+            {
+                SGModelBalls.Add(new ModelBall(orb));
+            }
+            return SGModelBalls;
         }
 
         public override void Start()

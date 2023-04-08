@@ -31,6 +31,8 @@ namespace Data
 
         public abstract void Dispose();
 
+        public abstract List<Ball> GetAll();
+
     }
 
 

@@ -16,6 +16,7 @@ namespace Logic
         {
             if (abstractDataApi == null)
             {
+                
                 this.dataApi = DataAbstractApi.CreateApi();
             }
             else
@@ -31,7 +32,11 @@ namespace Logic
 
         public override List<BallsLogic> GetBalls()
         {
-            return this.table;
+            foreach (Ball ball in dataApi.GetAll())
+            {
+                this.table.Add(new BallsLogic(ball));
+            }
+            return table;
         }
 
         public override void Start()

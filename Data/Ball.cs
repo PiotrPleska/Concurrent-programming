@@ -21,7 +21,7 @@ namespace Data
         if (YBackingField == value)
           return;
         YBackingField = value;
-        RaisePropertyChanged();
+        RaisePropertyChanged("Y");
       }
     }
 
@@ -33,7 +33,7 @@ namespace Data
         if (XBackingField == value)
           return;
         XBackingField = value;
-        RaisePropertyChanged();
+        RaisePropertyChanged("X");
       }
     }
 

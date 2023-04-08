@@ -22,6 +22,7 @@ namespace Logic
             {
                 if (ball.Y == value)
                     return;
+                ball.Y = value;
                 RaisePropertyChanged("Y");
             }
         }
@@ -33,11 +34,24 @@ namespace Logic
             {
                 if (ball.X == value)
                     return;
-                RaisePropertyChanged();
+                    ball.X = value;
+                RaisePropertyChanged("X");
             }
         }
 
-        public double Diameter { get; internal set; }
+        public double Diameter {
+            get
+            {
+                return ball.Diameter;
+            }
+            internal set
+            {
+                //if (ball.Diameter == value)
+                //    return;
+                //ball.Diameter = value;
+                //RaisePropertyChanged("Diameter");
+            }
+            }
 
         public BallsLogic(Ball ball)
         {

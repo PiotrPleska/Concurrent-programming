@@ -43,16 +43,25 @@ namespace Model
 
         public double X
         {
-            get { return y; }
+            get { return x; }
             private set
             {
-                if (y == value)
+                if (x == value)
                     return;
-                RaisePropertyChanged();
+                RaisePropertyChanged("X");
             }
         }
 
-        public double Diameter { get; internal set; }
+        public double Diameter 
+        {
+            get { return diameter; }
+            private set
+            {
+                //if (x == value)
+                //    return;
+                //RaisePropertyChanged("X");
+            }
+        }
 
 
 

@@ -25,7 +25,8 @@ namespace Data
         public override void Start()
         {
             Random random = new Random();
-            int ballNumber = random.Next(1, 10);
+            //int ballNumber = random.Next(1, 10);
+            int ballNumber = 2;
             for (int i = 0; i < ballNumber; i++)
             {
                 Ball newBall = new Ball(random.Next(100, 400 - 100), random.Next(100, 400 - 100)) { Diameter = 20 };
@@ -34,13 +35,17 @@ namespace Data
             }
         }
 
+        public override List<Ball> GetAll()
+        {
+            return Balls2Dispose;
+        }
 
         public event EventHandler<BallChaneEventArgs> BallChanged;
 
 
 
         private IObservable<EventPattern<BallChaneEventArgs>> eventObservable = null;
-        private List<IDisposable> Balls2Dispose = new List<IDisposable>();
+        private List<Ball> Balls2Dispose = new List<Ball>();
 
     }
 
