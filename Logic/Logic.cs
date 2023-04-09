@@ -10,67 +10,38 @@ namespace Logic
 {
     internal class Logic:LogicAbstractAPI
     {
-        private DataAbstractApi dataApi;
-        private List<BallsLogic> table = new List<BallsLogic>();
-        internal Logic(DataAbstractApi abstractDataApi = null)
+        private DataAbstractApi dataLayer;
+        private List<BallsLogic> Table = new List<BallsLogic>();
+        internal Logic(DataAbstractApi dataLayer = null)
         {
-            if (abstractDataApi == null)
-            {
-                
-                this.dataApi = DataAbstractApi.CreateApi();
-            }
-            else
-            {
-                this.dataApi = abstractDataApi;
-            }
+      
+                this.dataLayer = DataAbstractApi.CreateApi();
+            
         }
 
         public override void Dispose()
         {
-            dataApi.Dispose();
+            dataLayer.Dispose();
         }
 
         public override List<BallsLogic> GetBalls()
         {
-            foreach (Ball ball in dataApi.GetAll())
+            if (Table != null)
             {
-                this.table.Add(new BallsLogic(ball));
+                Table.Clear();
             }
-            return table;
+            foreach (Ball ball in dataLayer.GetAll())
+            {
+                this.Table.Add(new BallsLogic(ball));
+            }
+            return Table;
         }
 
         public override void Start()
         {
-            dataApi.Start();
-        }
-        private void Update(object sender, PropertyChangedEventArgs ev)
-        {
-            Ball ball = (Ball)sender;
-            if (ev.PropertyName == "Position")
-            {
-                BorderColision(ball);
-            }
-        }
-        private void BorderColision(Ball ball)
-        {
-            if ((ball.X + ball.Diameter) >= 400)
-            {
-                ball.X = 420 - ball.Diameter;
-            }
-            if ((ball.X - ball.Diameter) <= 0)
-            {
-                ball.X = ball.Diameter;
-            }
-            if ((ball.Y + ball.Diameter) >= 420)
-            {
-                ball.Y = 420 - ball.Diameter;
-            }
-            if ((ball.Y - ball.Diameter) <= 0)
-            {
-                ball.Y = ball.Diameter;
-            }
-        }
 
+            dataLayer.Start();
 
+        }
     }
 }

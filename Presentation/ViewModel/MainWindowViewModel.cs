@@ -11,7 +11,7 @@ namespace ViewModel
     {
 
         private ModelAbstractAPI ModelLayer;
-        public ObservableCollection<ModelBall> ModelBallsList;
+        private ObservableCollection<ModelBall> ModelBallsList;
         public ObservableCollection<ModelBall> SGModelBallsList
         {
             get { return ModelBallsList; }
@@ -34,24 +34,23 @@ namespace ViewModel
         public MainWindowViewModel(ModelAbstractAPI ModelApi = null)
         {
             Sig = new RelayCommand(start);
-            if (ModelApi == null)
-            {
-                this.ModelLayer = ModelAbstractAPI.CreateApi();
-            }
-            else
-            {
-                this.ModelLayer = ModelApi;
-            }
+            this.ModelLayer = ModelAbstractAPI.CreateApi();
+
         }
 
         public MainWindowViewModel() : this(null) { }
 
+
         private void start()
         {
+            if(SGModelBallsList != null) 
+            {
+                SGModelBallsList.Clear();
+            }
             ModelLayer.Start();
             SGModelBallsList = ModelLayer.GetModelBalls();
+            RaisePropertyChanged("SGModelBallsList");
         }
-
 
         public void Dispose()
         {
@@ -60,7 +59,7 @@ namespace ViewModel
 
 
 
-       
+
 
     }
 }

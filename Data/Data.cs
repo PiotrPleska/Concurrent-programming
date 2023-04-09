@@ -5,33 +5,34 @@ namespace Data
 {
 
     internal class Data : DataAbstractApi
-    {
-        public Data()
-        {
-            eventObservable = Observable.FromEventPattern<BallChaneEventArgs>(this, "BallChanged");
-        }
-
+    { 
+        private Ball ball;
+        private List<Ball> Balls2Dispose = new List<Ball>();
         public override void Dispose()
         {
-            foreach (Ball item in Balls2Dispose)
-                item.Dispose();
+            ball.Dispose();
         }
 
-        public override IDisposable Subscribe(IObserver<IBall> observer)
+        public override Ball GenerateBall()
         {
-            return eventObservable.Subscribe(x => observer.OnNext(x.EventArgs.Ball), ex => observer.OnError(ex), () => observer.OnCompleted());
+            Random random = new Random();
+            Ball newBall = new Ball(random.Next(100, 400 - 100), random.Next(100, 400 - 100));
+            return newBall;
         }
+
 
         public override void Start()
         {
+            if (Balls2Dispose != null)
+            {
+                Balls2Dispose.Clear();
+            }
             Random random = new Random();
-            //int ballNumber = random.Next(1, 10);
-            int ballNumber = 2;
+            int ballNumber = random.Next(1, 10);
             for (int i = 0; i < ballNumber; i++)
             {
-                Ball newBall = new Ball(random.Next(100, 400 - 100), random.Next(100, 400 - 100)) { Diameter = 20 };
+                Ball newBall = GenerateBall();
                 Balls2Dispose.Add(newBall);
-                BallChanged?.Invoke(this, new BallChaneEventArgs() { Ball = newBall });
             }
         }
 
@@ -39,13 +40,6 @@ namespace Data
         {
             return Balls2Dispose;
         }
-
-        public event EventHandler<BallChaneEventArgs> BallChanged;
-
-
-
-        private IObservable<EventPattern<BallChaneEventArgs>> eventObservable = null;
-        private List<Ball> Balls2Dispose = new List<Ball>();
 
     }
 

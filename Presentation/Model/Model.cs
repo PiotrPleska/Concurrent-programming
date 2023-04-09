@@ -1,4 +1,5 @@
-﻿using Logic;
+﻿using Data;
+using Logic;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -11,21 +12,15 @@ namespace Model
     internal class Model : ModelAbstractAPI
     {
 
-        private LogicAbstractAPI LogicAbstractAPI = LogicAbstractAPI.CreateApi(null);
-
+        private LogicAbstractAPI logicLayer;
         private ObservableCollection<ModelBall> ModelBalls = new ObservableCollection<ModelBall>();
 
 
         public Model(LogicAbstractAPI logicAbstractAPI = null) 
         {
-            if (logicAbstractAPI == null)
-            {
-                this.LogicAbstractAPI = LogicAbstractAPI.CreateApi();
-            }
-            else
-            {
-                this.LogicAbstractAPI = logicAbstractAPI;
-            }
+        
+                this.logicLayer = LogicAbstractAPI.CreateApi();
+          
         }
 
 
@@ -42,26 +37,29 @@ namespace Model
             }
         }
 
-
-        public override void Dispose()
-        {
-            LogicAbstractAPI.Dispose();
-        }
-
         public override ObservableCollection<ModelBall> GetModelBalls()
         {
-            List<BallsLogic> orbs = LogicAbstractAPI.GetBalls();
-            SGModelBalls.Clear();
-            foreach (BallsLogic orb in orbs)
+            List<BallsLogic> logicBalls = logicLayer.GetBalls();
+            if (SGModelBalls != null)
             {
-                SGModelBalls.Add(new ModelBall(orb));
+                SGModelBalls.Clear();
+            }
+            foreach (BallsLogic logicBall in logicBalls)
+            {
+                SGModelBalls.Add(new ModelBall(logicBall));
             }
             return SGModelBalls;
         }
 
+
+        public override void Dispose()
+        {
+            logicLayer.Dispose();
+        }
+
         public override void Start()
         {
-            LogicAbstractAPI.Start();
+            logicLayer.Start();
         }
     }
 }

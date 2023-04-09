@@ -4,11 +4,11 @@ using System.Collections.ObjectModel;
 
 namespace Model
 {
-    public abstract class ModelAbstractAPI
+    public abstract class ModelAbstractAPI :IDisposable
     {
-        public static ModelAbstractAPI CreateApi(LogicAbstractAPI abstractLogicApi = null)
+        public static ModelAbstractAPI CreateApi(LogicAbstractAPI logicLayer = null)
         {
-            return new Model(abstractLogicApi);
+            return new Model(logicLayer);
         }
 
         public abstract ObservableCollection<ModelBall> GetModelBalls();

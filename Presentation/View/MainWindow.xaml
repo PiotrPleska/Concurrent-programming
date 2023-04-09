@@ -7,33 +7,42 @@
         xmlns:local="clr-namespace:View"
         mc:Ignorable="d"
        Title="Presentation layer targeting reactive behaviour" Height="auto" Width="auto">
-    <Window.DataContext>
-        <viewModel:MainWindowViewModel/>
-    </Window.DataContext>
-    <Grid>
 
+    <Grid>
+        <Grid.DataContext>
+            <viewModel:MainWindowViewModel/>
+        </Grid.DataContext>
         <StackPanel  Background="#DCDCDC">
             <TextBox x:Name="NumberInput" Width="120" FontSize="24"/>
             <Button Content="Submit"  Width="60" Height="43" Command="{Binding Sig}"/>
         </StackPanel>
         <Border BorderThickness="4" BorderBrush="Green" Margin="0 85 0 0" Height="420" Width="400">
-            <ItemsControl Height="420" Width="400" ItemsSource="{Binding SGModelBallsList}">
+            <ItemsControl ItemsSource="{Binding SGModelBallsList}">
+                <ItemsControl.ItemContainerStyle>
+                    <Style>
+                        <Setter Property="Canvas.Left" Value="{Binding X}" />
+                        <Setter Property="Canvas.Top" Value="{Binding Y}" />
+                    </Style>
+                </ItemsControl.ItemContainerStyle>
+                <ItemsControl.ItemTemplate>
+
+                    <DataTemplate>
+                        <Canvas>
+                        <Ellipse Fill="Red" Width="{Binding Diameter}" Height="{Binding Diameter}" />
+                            <Canvas.Left>
+                                <Binding Path="X" />
+                            </Canvas.Left>
+                            <Canvas.Top>
+                                <Binding Path="Y" />
+                            </Canvas.Top>
+                        </Canvas>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
                         <Canvas />
                     </ItemsPanelTemplate>
                 </ItemsControl.ItemsPanel>
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate>
-                        <Ellipse Width= "{Binding Diameter}" Height="{Binding Diameter}" Fill="Blue" />
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-                <ItemsControl.ItemContainerStyle>
-                    <Style TargetType="ContentPresenter">
-                        <Setter Property="Canvas.Top" Value="{Binding Y}" />
-                        <Setter Property="Canvas.Left" Value="{Binding X}" />
-                    </Style>
-                </ItemsControl.ItemContainerStyle>
             </ItemsControl>
         </Border>
     </Grid>

@@ -3,73 +3,65 @@ using System.Runtime.CompilerServices;
 
 namespace Data
 {
- public class Ball : IBall, IDisposable
-  {
-    public Ball(double Y, double X)
+    public class Ball : IDisposable, INotifyPropertyChanged
     {
-      YBackingField = Y;
-      XBackingField = X;
-      MoveTimer = new Timer(Move, null, TimeSpan.Zero, TimeSpan.FromMilliseconds(100));
-    }
+        private double Diameter;
+        private Timer MoveTimer;
+        private Random Random = new Random();
+        private double YBackingField;
+        private double XBackingField;
+        public Ball(double Y, double X)
+        {
+            XBackingField = X;
+            YBackingField = Y;
+            this.diameter = 20;
+            MoveTimer = new Timer(Move, null, TimeSpan.Zero, TimeSpan.FromMilliseconds(100));
+        }
 
 
-    public double Y
-    {
-      get { return YBackingField; }
-      set// zmienic na prywatne
+        public double Y
+        {
+            get { return YBackingField; }
+            set// zmienic na prywatne
             {
-        if (YBackingField == value)
-          return;
-        YBackingField = value;
-        RaisePropertyChanged("Y");
-      }
+                if (YBackingField == value)
+                    return;
+                YBackingField = value;
+                RaisePropertyChanged("Y");
+            }
+        }
+
+        public double X
+        {
+            get { return XBackingField; }
+            set // zmienic na prywatne 
+            {
+                if (XBackingField == value)
+                    return;
+                XBackingField = value;
+                RaisePropertyChanged("X");
+            }
+        }
+        public double diameter { get; internal set; }
+
+        public void Dispose()
+        {
+            MoveTimer.Dispose();
+        }
+        private void Move(object state)
+        {
+            if (state != null)
+                throw new ArgumentOutOfRangeException(nameof(state));
+            Y = Y + (Random.NextDouble() - 0.5) * 10;
+            X = X + (Random.NextDouble() - 0.5) * 10;
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        private void RaisePropertyChanged([CallerMemberName] string propertyName = "")
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
     }
-
-    public double X
-    {
-      get { return XBackingField; }
-       set // zmienic na prywatne 
-      {
-        if (XBackingField == value)
-          return;
-        XBackingField = value;
-        RaisePropertyChanged("X");
-      }
-    }
-
-    public double Diameter { get; internal set; }
-
-
-    public event PropertyChangedEventHandler PropertyChanged;
-
-
-
-
-    public void Dispose()
-    {
-      MoveTimer.Dispose();
-    }
-
-
-
-    private double YBackingField;
-    private double XBackingField;
-    private Timer MoveTimer;
-    private Random Random = new Random();
-
-    private void RaisePropertyChanged([CallerMemberName] string propertyName = "")
-    {
-      PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-    }
-
-    private void Move(object state)
-    {
-      if (state != null)
-        throw new ArgumentOutOfRangeException(nameof(state));
-      Y = Y + (Random.NextDouble() - 0.5) * 10;
-      X = X + (Random.NextDouble() - 0.5) * 10;
-    }
-
-  }
 }
 

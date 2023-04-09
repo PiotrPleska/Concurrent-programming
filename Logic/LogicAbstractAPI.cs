@@ -2,7 +2,7 @@
 
 namespace Logic
 {
-    public abstract class LogicAbstractAPI
+    public abstract class LogicAbstractAPI: IDisposable 
     {
         public static LogicAbstractAPI CreateApi(DataAbstractApi abstractDataApi = null)
         {

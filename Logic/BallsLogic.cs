@@ -10,10 +10,12 @@ using Microsoft.VisualBasic;
 
 namespace Logic
 {
-    public class BallsLogic : INotifyPropertyChanged
+    public class BallsLogic: INotifyPropertyChanged
+
     {
         private Ball ball;
-        public event PropertyChangedEventHandler PropertyChanged;
+
+        public event PropertyChangedEventHandler? PropertyChanged;
 
         public double Y
         {
@@ -42,7 +44,7 @@ namespace Logic
         public double Diameter {
             get
             {
-                return ball.Diameter;
+                return ball.diameter;
             }
             internal set
             {
@@ -56,17 +58,38 @@ namespace Logic
         public BallsLogic(Ball ball)
         {
             this.ball = ball;
-            ball.PropertyChanged += Notify;
         }
+
         protected virtual void RaisePropertyChanged([CallerMemberName] string propertyName = null)
         {
             this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        private void Notify(object source, PropertyChangedEventArgs ev)
-        {
-            RaisePropertyChanged(ev.PropertyName);
-        }
+        //public void borderColision(Ball ball) {
+
+
+        //        if ((ball.x + ball.diameter) >= 400)
+        //        {
+
+        //            orb.X = DataApi.Scene.Width - orb.Radius;
+        //        }
+        //        if ((orb.X - orb.Radius) <= 0)
+        //        {
+        //            orb.XSpeed = -orb.XSpeed;
+        //            orb.X = orb.Radius;
+        //        }
+        //        if ((orb.Y + orb.Radius) >= DataApi.Scene.Height)
+        //        {
+        //            orb.YSpeed = -orb.YSpeed;
+        //            orb.Y = DataApi.Scene.Height - orb.Radius;
+        //        }
+        //        if ((orb.Y - orb.Radius) <= 0)
+        //        {
+        //            orb.YSpeed = -orb.YSpeed;
+        //            orb.Y = orb.Radius;
+        //        }
+
+        //}
 
 
     }
