@@ -22,7 +22,7 @@ namespace Data
         public double Y
         {
             get { return YBackingField; }
-            set// zmienic na prywatne
+            set
             {
                 if (YBackingField == value)
                     return;
@@ -34,7 +34,7 @@ namespace Data
         public double X
         {
             get { return XBackingField; }
-            set // zmienic na prywatne 
+            set
             {
                 if (XBackingField == value)
                     return;

@@ -21,6 +21,7 @@ namespace Model
             this.x = ball.X;
             this.y = ball.Y;
             this.diameter = ball.Diameter;
+            ball.PropertyChanged += UpdateCoordinates;
         }
 
       
@@ -50,16 +51,17 @@ namespace Model
         public double Diameter 
         {
             get { return diameter; }
-            private set
-            {
-                //if (x == value)
-                //    return;
-                //RaisePropertyChanged("X");
-            }
         }
 
 
-
+        private void UpdateCoordinates(object sender, EventArgs e)
+        {
+           BallsLogic ballsLogic = (BallsLogic)sender;
+            x = ballsLogic.X;
+            y = ballsLogic.Y;
+            RaisePropertyChanged("X");
+            RaisePropertyChanged("Y");
+        }
 
 
         public event PropertyChangedEventHandler? PropertyChanged;

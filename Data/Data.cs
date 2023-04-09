@@ -28,7 +28,8 @@ namespace Data
                 Balls2Dispose.Clear();
             }
             Random random = new Random();
-            int ballNumber = random.Next(1, 10);
+            //int ballNumber = random.Next(1, 10);
+            int ballNumber = 20;
             for (int i = 0; i < ballNumber; i++)
             {
                 Ball newBall = GenerateBall();

@@ -20,10 +20,9 @@ namespace Model
         {
         
                 this.logicLayer = LogicAbstractAPI.CreateApi();
-          
         }
 
-
+        
 
         public ObservableCollection<ModelBall> SGModelBalls
         {

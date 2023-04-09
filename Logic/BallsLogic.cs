@@ -25,7 +25,6 @@ namespace Logic
                 if (ball.Y == value)
                     return;
                 ball.Y = value;
-                RaisePropertyChanged("Y");
             }
         }
 
@@ -37,27 +36,31 @@ namespace Logic
                 if (ball.X == value)
                     return;
                     ball.X = value;
-                RaisePropertyChanged("X");
             }
         }
+
 
         public double Diameter {
             get
             {
                 return ball.diameter;
             }
-            internal set
-            {
-                //if (ball.Diameter == value)
-                //    return;
-                //ball.Diameter = value;
-                //RaisePropertyChanged("Diameter");
-            }
-            }
+        }
 
         public BallsLogic(Ball ball)
         {
             this.ball = ball;
+            ball.PropertyChanged += UpdateCoordinates;
+        }
+
+        private void UpdateCoordinates(object sender, EventArgs e)
+        {
+
+            X = ball.X;
+            Y = ball.Y;
+            borderColision(ball);
+            RaisePropertyChanged("X");
+            RaisePropertyChanged("Y");
         }
 
         protected virtual void RaisePropertyChanged([CallerMemberName] string propertyName = null)
@@ -65,31 +68,29 @@ namespace Logic
             this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        //public void borderColision(Ball ball) {
+        public void borderColision(Ball ball)
+        {
 
 
-        //        if ((ball.x + ball.diameter) >= 400)
-        //        {
+            if ((ball.X + ball.diameter) >= 395)
+            {
 
-        //            orb.X = DataApi.Scene.Width - orb.Radius;
-        //        }
-        //        if ((orb.X - orb.Radius) <= 0)
-        //        {
-        //            orb.XSpeed = -orb.XSpeed;
-        //            orb.X = orb.Radius;
-        //        }
-        //        if ((orb.Y + orb.Radius) >= DataApi.Scene.Height)
-        //        {
-        //            orb.YSpeed = -orb.YSpeed;
-        //            orb.Y = DataApi.Scene.Height - orb.Radius;
-        //        }
-        //        if ((orb.Y - orb.Radius) <= 0)
-        //        {
-        //            orb.YSpeed = -orb.YSpeed;
-        //            orb.Y = orb.Radius;
-        //        }
+                ball.X = 395 - ball.diameter;
+            }
+            if ((ball.X - ball.diameter) <= 0)
+            {
+                ball.X = ball.diameter;
+            }
+            if ((ball.Y + ball.diameter) >= 415)
+            {
+                ball.Y = 415 - ball.diameter;
+            }
+            if ((ball.Y - ball.diameter) <= 0)
+            {
+                ball.Y = ball.diameter;
+            }
 
-        //}
+        }
 
 
     }
