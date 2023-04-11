@@ -1,11 +1,8 @@
-﻿using System.Reactive;
-using System.Reactive.Linq;
-
-namespace Data
+﻿namespace Data
 {
 
     internal class Data : DataAbstractApi
-    { 
+    {
         private Ball ball;
         private List<Ball> Balls2Dispose = new List<Ball>();
         public override void Dispose()
@@ -21,16 +18,13 @@ namespace Data
         }
 
 
-        public override void Start()
+        public override void Start(int ballCount)
         {
             if (Balls2Dispose != null)
             {
                 Balls2Dispose.Clear();
             }
-            Random random = new Random();
-            //int ballNumber = random.Next(1, 10);
-            int ballNumber = 20;
-            for (int i = 0; i < ballNumber; i++)
+            for (int i = 0; i < ballCount; i++)
             {
                 Ball newBall = GenerateBall();
                 Balls2Dispose.Add(newBall);

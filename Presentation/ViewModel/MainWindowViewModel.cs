@@ -1,17 +1,25 @@
-﻿using System;
+﻿using Model;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
-using Data;
-using Logic;
-using Model;
 
 namespace ViewModel
 {
     public class MainWindowViewModel : ViewModelBase, IDisposable
     {
-
-        private ModelAbstractAPI ModelLayer;
+        private ModelAbstractApi ModelLayer;
         private ObservableCollection<ModelBall> ModelBallsList;
+        private int ballCount;
+
+        public string BallCount
+        {
+            get { return Convert.ToString(this.ballCount); }
+            set
+            {
+                this.ballCount = Convert.ToInt32(value);
+                RaisePropertyChanged("BallCount");
+            }
+        }
+
         public ObservableCollection<ModelBall> SGModelBallsList
         {
             get { return ModelBallsList; }
@@ -24,30 +32,29 @@ namespace ViewModel
         }
 
 
-        public ICommand Sig
-        {
-            get;
-            set;
-        }
+        public ICommand Sig { get; set; }
 
 
-        public MainWindowViewModel(ModelAbstractAPI ModelApi = null)
+        public MainWindowViewModel(ModelAbstractApi ModelApi = null)
         {
             Sig = new RelayCommand(start);
-            this.ModelLayer = ModelAbstractAPI.CreateApi();
-
+            this.ModelLayer = ModelAbstractApi.CreateApi();
         }
 
-        public MainWindowViewModel() : this(null) { }
+        public MainWindowViewModel() : this(null)
+        {
+        }
 
 
         private void start()
         {
-            if(SGModelBallsList != null) 
+            if (SGModelBallsList != null)
             {
+                Dispose();
                 SGModelBallsList.Clear();
             }
-            ModelLayer.Start();
+
+            ModelLayer.Start(ballCount);
             SGModelBallsList = ModelLayer.GetModelBalls();
             RaisePropertyChanged("SGModelBallsList");
         }
@@ -56,10 +63,5 @@ namespace ViewModel
         {
             ModelLayer.Dispose();
         }
-
-
-
-
-
     }
 }

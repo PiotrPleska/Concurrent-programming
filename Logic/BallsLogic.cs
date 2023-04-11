@@ -1,16 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Data;
 using System.ComponentModel;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
-using Data;
-using Microsoft.VisualBasic;
 
 namespace Logic
 {
-    public class BallsLogic: INotifyPropertyChanged
+    public class BallsLogic : INotifyPropertyChanged
 
     {
         private Ball ball;
@@ -35,12 +29,13 @@ namespace Logic
             {
                 if (ball.X == value)
                     return;
-                    ball.X = value;
+                ball.X = value;
             }
         }
 
 
-        public double Diameter {
+        public double Diameter
+        {
             get
             {
                 return ball.diameter;
@@ -68,7 +63,7 @@ namespace Logic
             this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        public void borderColision(Ball ball)
+        private void borderColision(Ball ball)
         {
 
 

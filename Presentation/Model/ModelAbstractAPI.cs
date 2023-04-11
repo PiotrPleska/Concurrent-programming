@@ -1,19 +1,18 @@
-﻿using Data;
-using Logic;
+﻿using Logic;
 using System.Collections.ObjectModel;
 
 namespace Model
 {
-    public abstract class ModelAbstractAPI :IDisposable
+    public abstract class ModelAbstractApi : IDisposable
     {
-        public static ModelAbstractAPI CreateApi(LogicAbstractAPI logicLayer = null)
+        public static ModelAbstractApi CreateApi(LogicAbstractApi logicLayer = null)
         {
             return new Model(logicLayer);
         }
 
         public abstract ObservableCollection<ModelBall> GetModelBalls();
 
-        public abstract void Start();
+        public abstract void Start(int ballCount);
         public abstract void Dispose();
     }
 }

@@ -1,9 +1,7 @@
-﻿using System.ComponentModel;
-
-namespace Data
+﻿namespace Data
 {
 
-  
+
 
     public abstract class DataAbstractApi : IDisposable
     {
@@ -16,7 +14,7 @@ namespace Data
         public abstract Ball GenerateBall();
 
         public abstract void Dispose();
-        public abstract void Start();
+        public abstract void Start(int ballCount);
 
         public abstract List<Ball> GetAll();
 

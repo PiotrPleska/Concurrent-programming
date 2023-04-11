@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Logic;
 using System.ComponentModel;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
-using Logic;
-using Microsoft.VisualBasic;
 
 namespace Model
 {
@@ -14,17 +8,15 @@ namespace Model
     {
         private double x;
         private double y;
-        private double diameter;
 
         public ModelBall(BallsLogic ball)
         {
             this.x = ball.X;
             this.y = ball.Y;
-            this.diameter = ball.Diameter;
+            this.Diameter = ball.Diameter;
             ball.PropertyChanged += UpdateCoordinates;
         }
 
-      
 
         public double Y
         {
@@ -39,7 +31,7 @@ namespace Model
 
         public double X
         {
-            get { return x; }
+            get => x;
             private set
             {
                 if (x == value)
@@ -48,15 +40,12 @@ namespace Model
             }
         }
 
-        public double Diameter 
-        {
-            get { return diameter; }
-        }
+        public double Diameter { get; }
 
 
         private void UpdateCoordinates(object sender, EventArgs e)
         {
-           BallsLogic ballsLogic = (BallsLogic)sender;
+            BallsLogic ballsLogic = (BallsLogic)sender;
             x = ballsLogic.X;
             y = ballsLogic.Y;
             RaisePropertyChanged("X");

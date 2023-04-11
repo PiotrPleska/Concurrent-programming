@@ -1,39 +1,24 @@
-﻿using Data;
-using Logic;
-using System;
-using System.Collections.Generic;
+﻿using Logic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Model
 {
-    internal class Model : ModelAbstractAPI
+    internal class Model : ModelAbstractApi
     {
-
-        private LogicAbstractAPI logicLayer;
+        private LogicAbstractApi logicLayer;
         private ObservableCollection<ModelBall> ModelBalls = new ObservableCollection<ModelBall>();
 
 
-        public Model(LogicAbstractAPI logicAbstractAPI = null) 
+        public Model(LogicAbstractApi logicAbstractAPI = null)
         {
-        
-                this.logicLayer = LogicAbstractAPI.CreateApi();
+            this.logicLayer = LogicAbstractApi.CreateApi();
         }
 
-        
 
         public ObservableCollection<ModelBall> SGModelBalls
         {
-            get
-            {
-                return ModelBalls;
-            }
-            set
-            {
-                ModelBalls = value;
-            }
+            get { return ModelBalls; }
+            set { ModelBalls = value; }
         }
 
         public override ObservableCollection<ModelBall> GetModelBalls()
@@ -43,10 +28,12 @@ namespace Model
             {
                 SGModelBalls.Clear();
             }
+
             foreach (BallsLogic logicBall in logicBalls)
             {
                 SGModelBalls.Add(new ModelBall(logicBall));
             }
+
             return SGModelBalls;
         }
 
@@ -56,9 +43,9 @@ namespace Model
             logicLayer.Dispose();
         }
 
-        public override void Start()
+        public override void Start(int ballCount)
         {
-            logicLayer.Start();
+            logicLayer.Start(ballCount);
         }
     }
 }

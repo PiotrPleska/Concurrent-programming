@@ -5,7 +5,7 @@ namespace Data
 {
     public class Ball : IDisposable, INotifyPropertyChanged
     {
-        private double Diameter;
+        private readonly double Diameter;
         private Timer MoveTimer;
         private Random Random = new Random();
         private double YBackingField;
@@ -14,7 +14,7 @@ namespace Data
         {
             XBackingField = X;
             YBackingField = Y;
-            this.diameter = 20;
+            this.Diameter = 20;
             MoveTimer = new Timer(Move, null, TimeSpan.Zero, TimeSpan.FromMilliseconds(100));
         }
 
@@ -31,6 +31,7 @@ namespace Data
             }
         }
 
+
         public double X
         {
             get { return XBackingField; }
@@ -42,7 +43,7 @@ namespace Data
                 RaisePropertyChanged("X");
             }
         }
-        public double diameter { get; internal set; }
+        public double diameter { get { return Diameter; } }
 
         public void Dispose()
         {
