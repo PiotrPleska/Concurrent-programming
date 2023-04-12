@@ -28,7 +28,7 @@
 
                     <DataTemplate>
                         <Canvas>
-                        <Ellipse Fill="Red" Width="{Binding Diameter}" Height="{Binding Diameter}" />
+                        <Ellipse Fill="Red" Width="{Binding Diamiter}" Height="{Binding Diamiter}" />
                             <Canvas.Left>
                                 <Binding Path="X" />
                             </Canvas.Left>

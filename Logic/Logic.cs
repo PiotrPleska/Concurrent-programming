@@ -39,6 +39,7 @@ namespace Logic
 
         public override void Start(int ballCount)
         {
+            if (Table != null) Table.Clear();
             for (int i = 0; i < ballCount; i++)
             {
                 LogicBall ball = new LogicBall(dataLayer.generateBall());
