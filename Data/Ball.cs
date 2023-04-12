@@ -3,9 +3,8 @@ using System.Runtime.CompilerServices;
 
 namespace Data
 {
-    public class Ball : IDisposable, INotifyPropertyChanged
+    internal class Ball : IBall,IDisposable, INotifyPropertyChanged
     {
-        private readonly double Diameter;
         private Timer MoveTimer;
         private Random Random = new Random();
         private double YBackingField;
@@ -14,7 +13,7 @@ namespace Data
         {
             XBackingField = X;
             YBackingField = Y;
-            this.Diameter = 20;
+            Diamiter = 20;
             MoveTimer = new Timer(Move, null, TimeSpan.Zero, TimeSpan.FromMilliseconds(100));
         }
 
@@ -27,9 +26,11 @@ namespace Data
                 if (YBackingField == value)
                     return;
                 YBackingField = value;
-                RaisePropertyChanged("Y");
+                RaisePropertyChanged();
             }
         }
+
+        public double Diamiter { get; set; }
 
 
         public double X
@@ -40,14 +41,13 @@ namespace Data
                 if (XBackingField == value)
                     return;
                 XBackingField = value;
-                RaisePropertyChanged("X");
+                RaisePropertyChanged();
             }
         }
-        public double diameter { get { return Diameter; } }
 
         public void Dispose()
         {
-            MoveTimer.Dispose();
+            MoveTimer?.Dispose();
         }
         private void Move(object state)
         {

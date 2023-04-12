@@ -7,7 +7,7 @@ namespace ViewModel
     public class MainWindowViewModel : ViewModelBase, IDisposable
     {
         private ModelAbstractApi ModelLayer;
-        private ObservableCollection<ModelBall> ModelBallsList;
+        private ObservableCollection<IModelBall> ModelBallsList;
         private int ballCount;
 
         public string BallCount
@@ -20,7 +20,7 @@ namespace ViewModel
             }
         }
 
-        public ObservableCollection<ModelBall> SGModelBallsList
+        public ObservableCollection<IModelBall> SGModelBallsList
         {
             get { return ModelBallsList; }
             set

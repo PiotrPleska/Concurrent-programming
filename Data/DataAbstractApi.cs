@@ -1,23 +1,31 @@
-﻿namespace Data
+﻿using System.ComponentModel;
+
+namespace Data
 {
 
 
 
-    public abstract class DataAbstractApi : IDisposable
+    public abstract class DataAbstractApi :IDisposable
     {
+
         public static DataAbstractApi CreateApi()
         {
-            Data model = new Data();
-            return model;
+            Data data = new Data();
+            return data;
         }
 
-        public abstract Ball GenerateBall();
+        public abstract IBall getBall();
+        public abstract IBall generateBall();
 
         public abstract void Dispose();
-        public abstract void Start(int ballCount);
 
-        public abstract List<Ball> GetAll();
+    }
 
+    public interface IBall: INotifyPropertyChanged
+    {
+        double X { get; set; }
+        double Y { get; set; }
+        double Diamiter { get; set; }
     }
 
 

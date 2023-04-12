@@ -4,52 +4,60 @@ using System.Runtime.CompilerServices;
 
 namespace Model
 {
-    public class ModelBall : INotifyPropertyChanged
+    internal class ModelBall :IModelBall,INotifyPropertyChanged
     {
+        private LogicAbstractApi API = LogicAbstractApi.CreateApi();
+        
+
+
         private double x;
         private double y;
+        private double diameter;
 
-        public ModelBall(BallsLogic ball)
+        public ModelBall(ILogicBall ball)
         {
             this.x = ball.X;
             this.y = ball.Y;
-            this.Diameter = ball.Diameter;
-            ball.PropertyChanged += UpdateCoordinates;
+            this.Diamiter = ball.Diamiter;
+            // ball.PropertyChanged += UpdateCoordinates;
         }
 
-
-        public double Y
-        {
-            get { return y; }
-            private set
-            {
-                if (y == value)
-                    return;
-                RaisePropertyChanged("Y");
-            }
-        }
 
         public double X
         {
-            get => x;
-            private set
+            get { return this.x; }
+            set
             {
-                if (x == value)
-                    return;
+                this.x = value;
                 RaisePropertyChanged("X");
             }
         }
 
-        public double Diameter { get; }
+        public double Y
+        {
+            get => this.y;
+
+                set
+                {
+                    this.y = value;
+                    RaisePropertyChanged("Y");
+                }
+}
+
+        public double Diamiter
+        {
+            get { return this.diameter; }
+            set => this.diameter = value;
+        }
+
 
 
         private void UpdateCoordinates(object sender, EventArgs e)
         {
-            BallsLogic ballsLogic = (BallsLogic)sender;
+            ILogicBall ballsLogic = (ILogicBall)sender;
             x = ballsLogic.X;
             y = ballsLogic.Y;
-            RaisePropertyChanged("X");
-            RaisePropertyChanged("Y");
+            RaisePropertyChanged();
         }
 
 

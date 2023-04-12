@@ -6,7 +6,7 @@ namespace Model
     internal class Model : ModelAbstractApi
     {
         private LogicAbstractApi logicLayer;
-        private ObservableCollection<ModelBall> ModelBalls = new ObservableCollection<ModelBall>();
+        private ObservableCollection<IModelBall> ModelBalls = new ObservableCollection<IModelBall>();
 
 
         public Model(LogicAbstractApi logicAbstractAPI = null)
@@ -15,21 +15,21 @@ namespace Model
         }
 
 
-        public ObservableCollection<ModelBall> SGModelBalls
+        public ObservableCollection<IModelBall> SGModelBalls
         {
             get { return ModelBalls; }
             set { ModelBalls = value; }
         }
 
-        public override ObservableCollection<ModelBall> GetModelBalls()
+        public override ObservableCollection<IModelBall> GetModelBalls()
         {
-            List<BallsLogic> logicBalls = logicLayer.GetBalls();
+            List<ILogicBall> logicBalls = logicLayer.GetBalls();
             if (SGModelBalls != null)
             {
                 SGModelBalls.Clear();
             }
 
-            foreach (BallsLogic logicBall in logicBalls)
+            foreach (ILogicBall logicBall in logicBalls)
             {
                 SGModelBalls.Add(new ModelBall(logicBall));
             }
@@ -40,7 +40,7 @@ namespace Model
 
         public override void Dispose()
         {
-            logicLayer.Dispose();
+            logicLayer?.Dispose();
         }
 
         public override void Start(int ballCount)
