@@ -10,6 +10,7 @@ namespace Logic
 
     internal class Logic : LogicAbstractApi
     {
+        private LogicBall LogicBall;
         private DataAbstractApi dataLayer;
 
         private List<ILogicBall> Table = new List<ILogicBall>();
@@ -28,7 +29,10 @@ namespace Logic
             dataLayer?.Dispose();
         }
 
-        
+        public override ILogicBall getBall()
+        {
+            return LogicBall;
+        }
 
         public override List<ILogicBall> GetBalls()
         {

@@ -3,7 +3,12 @@
 namespace Data
 {
 
-
+    public interface IBall : INotifyPropertyChanged
+    {
+        double X { get; set; }
+        double Y { get; set; }
+        double Diamiter { get; set; }
+    }
 
     public abstract class DataAbstractApi :IDisposable
     {
@@ -21,12 +26,7 @@ namespace Data
 
     }
 
-    public interface IBall: INotifyPropertyChanged
-    {
-        double X { get; set; }
-        double Y { get; set; }
-        double Diamiter { get; set; }
-    }
+
 
 
 }

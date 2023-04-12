@@ -6,10 +6,7 @@ namespace Model
 {
     internal class ModelBall :IModelBall,INotifyPropertyChanged
     {
-        private LogicAbstractApi API = LogicAbstractApi.CreateApi();
-        
-
-
+        private static LogicAbstractApi API = LogicAbstractApi.CreateApi();
         private double x;
         private double y;
         private double diameter;
@@ -19,7 +16,7 @@ namespace Model
             this.x = ball.X;
             this.y = ball.Y;
             this.Diamiter = ball.Diamiter;
-            // ball.PropertyChanged += UpdateCoordinates;
+            ball.PropertyChanged += UpdateCoordinates;
         }
 
 
@@ -29,7 +26,6 @@ namespace Model
             set
             {
                 this.x = value;
-                RaisePropertyChanged("X");
             }
         }
 
@@ -40,7 +36,6 @@ namespace Model
                 set
                 {
                     this.y = value;
-                    RaisePropertyChanged("Y");
                 }
 }
 
@@ -57,7 +52,8 @@ namespace Model
             ILogicBall ballsLogic = (ILogicBall)sender;
             x = ballsLogic.X;
             y = ballsLogic.Y;
-            RaisePropertyChanged();
+            RaisePropertyChanged("X");
+            RaisePropertyChanged("Y");
         }
 
 

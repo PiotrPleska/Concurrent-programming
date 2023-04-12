@@ -16,13 +16,19 @@ namespace Logic
         double ILogicBall.X
         {
             get => Ball.X;
-            set => Ball.X = value;
+            set 
+            { 
+                Ball.X = value;
+            }
         }
 
         double ILogicBall.Y
         {
             get => Ball.Y;
-            set => Ball.Y = value;
+            set
+            {
+                Ball.Y = value;
+            }
         }
 
         public double Diamiter
@@ -30,10 +36,11 @@ namespace Logic
             get { return Ball.Diamiter; }
         }
 
+
         public LogicBall(IBall ball)
         {
-this.Ball = ball;
-            // ball.PropertyChanged+= UpdateCoordinates;
+            this.Ball = ball;
+            ball.PropertyChanged += UpdateCoordinates;
         }
 
         private void UpdateCoordinates(object sender, EventArgs e)

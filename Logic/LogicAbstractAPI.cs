@@ -1,8 +1,9 @@
 ﻿using Data;
+using System.ComponentModel;
 
 namespace Logic
 {
-    public interface ILogicBall
+    public interface ILogicBall : INotifyPropertyChanged
     {
         public double X { get; set; }
         public double Y { get; set; }
@@ -14,6 +15,8 @@ namespace Logic
         {
             return new Logic(abstractDataApi);
         }
+
+        public abstract ILogicBall getBall();
 
         public abstract List<ILogicBall> GetBalls();
 

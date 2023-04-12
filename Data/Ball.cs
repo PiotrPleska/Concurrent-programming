@@ -55,6 +55,7 @@ namespace Data
                 throw new ArgumentOutOfRangeException(nameof(state));
             Y = Y + (Random.NextDouble() - 0.5) * 10;
             X = X + (Random.NextDouble() - 0.5) * 10;
+            RaisePropertyChanged();
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
