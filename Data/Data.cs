@@ -19,6 +19,7 @@
         {
             Random random = new Random();
             Ball newBall = new Ball(random.Next(100, 400 - 100), random.Next(100, 400 - 100));
+            this.ball = newBall;
             return newBall;
         }
 
