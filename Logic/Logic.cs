@@ -3,11 +3,6 @@
 namespace Logic
 {
 
-    public class BallChangeEventArgs : EventArgs
-    {
-        public ILogicBall Ball { get; internal set; }
-    }
-
     internal class Logic : LogicAbstractApi
     {
         private LogicBall LogicBall;
@@ -20,8 +15,6 @@ namespace Logic
             this.dataLayer = DataAbstractApi.CreateApi();
 
         }
-
-        public event EventHandler<BallChangeEventArgs> BallChange;
 
 
         public override void Dispose()
@@ -48,7 +41,6 @@ namespace Logic
             {
                 LogicBall ball = new LogicBall(dataLayer.generateBall());
                 Table.Add(ball);
-                BallChange?.Invoke(this,new BallChangeEventArgs(){Ball=ball});
             }
         }
     }

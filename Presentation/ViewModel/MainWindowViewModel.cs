@@ -27,7 +27,6 @@ namespace ViewModel
             {
                 if (value.Equals(this.ModelBallsList)) return;
                 ModelBallsList = value;
-                RaisePropertyChanged("SGModelBallList");
             }
         }
 
