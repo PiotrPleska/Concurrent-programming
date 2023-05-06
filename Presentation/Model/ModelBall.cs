@@ -4,7 +4,7 @@ using System.Runtime.CompilerServices;
 
 namespace Model
 {
-    internal class ModelBall :IModelBall,INotifyPropertyChanged
+    internal class ModelBall : IModelBall, INotifyPropertyChanged
     {
         private static LogicAbstractApi API = LogicAbstractApi.CreateApi();
         private double x;
@@ -45,7 +45,7 @@ namespace Model
             set => this.diameter = value;
         }
 
-
+        public double speed => throw new NotImplementedException();
 
         private void UpdateCoordinates(object sender, EventArgs e)
         {

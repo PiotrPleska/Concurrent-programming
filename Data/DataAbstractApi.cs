@@ -5,9 +5,11 @@ namespace Data
 
     public interface IBall : INotifyPropertyChanged
     {
-        double X { get; set; }
-        double Y { get; set; }
-        double Diamiter { get; set; }
+        double X { get;}
+        double Y { get; }
+        double Diamiter { get; }
+        double speedX { get; set; }
+        double speedY { get; set; }
     }
 
     public abstract class DataAbstractApi :IDisposable

@@ -8,6 +8,11 @@ namespace Logic
     internal class LogicBall : ILogicBall,INotifyPropertyChanged
 
     {
+        private double x;
+        private double y;
+        private double diameter;
+        private double SpeedX;
+        private double SpeedY;
 
         public event PropertyChangedEventHandler? PropertyChanged;
         private static DataAbstractApi API = DataAbstractApi.CreateApi();
@@ -15,38 +20,33 @@ namespace Logic
 
         double ILogicBall.X
         {
-            get => Ball.X;
-            set 
-            { 
-                Ball.X = value;
-            }
+            get => x;
         }
 
         double ILogicBall.Y
         {
-            get => Ball.Y;
-            set
-            {
-                Ball.Y = value;
-            }
+            get => y;
         }
 
-        public double Diamiter
-        {
-            get { return Ball.Diamiter; }
-        }
+        public double Diamiter => diameter;
 
+        double ILogicBall.speedX => SpeedX;
+
+        double ILogicBall.speedY => SpeedY;
 
         public LogicBall(IBall ball)
         {
             this.Ball = ball;
+            x = ball.X;
+            y = ball.Y;
+            diameter = ball.Diamiter;
             ball.PropertyChanged += UpdateCoordinates;
         }
 
         private void UpdateCoordinates(object sender, EventArgs e)
         {
-            ((ILogicBall)this).X = Ball.X;
-            ((ILogicBall)this).Y = Ball.Y;
+            x = Ball.X;
+            y = Ball.Y;
             borderColision(Ball);
             RaisePropertyChanged();
         }
@@ -60,22 +60,25 @@ namespace Logic
         {
 
 
-            if ((Ball.X + Ball.Diamiter) >= 395)
+            if ((x + diameter) >= 395)
             {
-
-                Ball.X = 395 - Ball.Diamiter;
+                ball.speedX = -ball.speedX;
+                x = 395 - diameter;
             }
-            if ((Ball.X - Ball.Diamiter) <= 0)
+            if ((x - diameter) <= -20)
             {
-                Ball.X = Ball.Diamiter;
+                ball.speedX = -ball.speedX;
+                x = diameter;
             }
-            if ((Ball.Y + Ball.Diamiter) >= 415)
+            if ((y + diameter) >= 415)
             {
-                Ball.Y = 415 - Ball.Diamiter;
+                ball.speedY = -ball.speedY;
+                y = 415 - diameter;
             }
-            if ((Ball.Y - Ball.Diamiter) <= 0)
+            if ((y - diameter) <= -20)
             {
-                Ball.Y = Ball.Diamiter;
+                ball.speedY = -ball.speedY;
+                y = diameter;
             }
 
         }

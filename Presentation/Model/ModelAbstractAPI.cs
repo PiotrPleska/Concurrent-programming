@@ -5,9 +5,11 @@ namespace Model
 {
     public interface IModelBall
     {
-        public double X { get; set; }
-        public double Y { get; set; }
+        public double X { get; }
+        public double Y { get; }
         public double Diamiter { get; }
+        
+        public double speed { get; }
     }
 
     public abstract class ModelAbstractApi : IDisposable

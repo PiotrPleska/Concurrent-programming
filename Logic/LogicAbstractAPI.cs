@@ -5,9 +5,13 @@ namespace Logic
 {
     public interface ILogicBall : INotifyPropertyChanged
     {
-        public double X { get; set; }
-        public double Y { get; set; }
+        public double X { get;}
+        public double Y { get;  }
         public double Diamiter { get; }
+
+        public double speedX { get; }
+
+        public double speedY { get; }
     }
     public abstract class LogicAbstractApi : IDisposable
     {

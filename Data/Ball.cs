@@ -3,18 +3,21 @@ using System.Runtime.CompilerServices;
 
 namespace Data
 {
-    internal class Ball : IBall,IDisposable, INotifyPropertyChanged
+    internal class Ball : IBall, IDisposable, INotifyPropertyChanged
     {
         private Timer MoveTimer;
         private Random Random = new Random();
         private double YBackingField;
         private double XBackingField;
+        private double speedX;
+        private double speedY;
         public Ball(double Y, double X)
         {
             XBackingField = X;
             YBackingField = Y;
             Diamiter = 20;
-            MoveTimer = new Timer(Move, null, TimeSpan.Zero, TimeSpan.FromMilliseconds(100));
+            speedX = Random.NextDouble();
+            speedY = Random.NextDouble();
         }
 
 
@@ -45,16 +48,17 @@ namespace Data
             }
         }
 
+        double IBall.speedX { get => speedX; set => speedX = value; }
+        double IBall.speedY { get => speedY; set => speedY = value; }
+
         public void Dispose()
         {
             MoveTimer?.Dispose();
         }
-        private void Move(object state)
+        public void Move()
         {
-            if (state != null)
-                throw new ArgumentOutOfRangeException(nameof(state));
-            Y = Y + (Random.NextDouble() - 0.5) * 10;
-            X = X + (Random.NextDouble() - 0.5) * 10;
+            this.X += this.speedX;
+            this.Y += this.speedY;
             RaisePropertyChanged();
         }
 
