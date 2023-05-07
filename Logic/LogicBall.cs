@@ -17,7 +17,6 @@ namespace Logic
         public event PropertyChangedEventHandler? PropertyChanged;
         private static DataAbstractApi API = DataAbstractApi.CreateApi();
         private IBall Ball = API.getBall();
-
         double ILogicBall.X
         {
             get => x;
@@ -48,6 +47,7 @@ namespace Logic
             x = Ball.X;
             y = Ball.Y;
             borderColision(Ball);
+            //BallCollision(Ball);
             RaisePropertyChanged();
         }
 
@@ -82,6 +82,7 @@ namespace Logic
             }
 
         }
+
 
 
     }

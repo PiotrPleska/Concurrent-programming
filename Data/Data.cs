@@ -6,6 +6,7 @@ namespace Data
     internal class Data : DataAbstractApi
     {
         private Ball ball;
+        private List<IBall> ballList = new List<IBall>();
         private readonly object locked = new object();
         public override IBall getBall()
         {
@@ -37,6 +38,21 @@ namespace Data
             return newBall;
         }
 
+        public override void Start(int ballCount)
+        {
+            if (ballList != null) ballList.Clear();
+            for (int i = 0; i < ballCount; i++)
+            {
+                IBall newBall;
+                newBall = generateBall();
+                ballList.Add(newBall);
+            }
+        }
+
+        public override List<IBall> getBalls()
+        {
+            return ballList;
+        }
     }
 
 

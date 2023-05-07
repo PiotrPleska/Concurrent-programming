@@ -22,7 +22,7 @@ namespace Logic
 
         public abstract ILogicBall getBall();
 
-        public abstract List<ILogicBall> GetBalls();
+        public abstract  List<ILogicBall> GetBalls();
 
         public abstract void Start(int ballCount);
         public abstract void Dispose();

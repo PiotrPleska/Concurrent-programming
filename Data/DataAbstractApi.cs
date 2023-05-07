@@ -24,7 +24,11 @@ namespace Data
         public abstract IBall getBall();
         public abstract IBall generateBall();
 
+        public abstract List<IBall> getBalls();
+
         public abstract void Dispose();
+
+        public abstract void Start(int ballCount);
 
     }
 

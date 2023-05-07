@@ -27,21 +27,43 @@ namespace Logic
             return LogicBall;
         }
 
-        public override List<ILogicBall> GetBalls()
+        public override  List<ILogicBall> GetBalls()
         {
+            if(Table != null) Table.Clear();
+            foreach (IBall b in dataLayer.getBalls())
+            {
+                Table.Add(new LogicBall(b));
+            }
             return Table;
         }
 
-        
+        public void BallCollision(IBall ball)
+        {
+            foreach (IBall b in Table)
+            {
+                if (b == ball)
+                {
+                    continue;
+                }
+                double xDiff = b.X - ball.X;
+                double yDiff = b.Y - ball.Y;
+                double distance = Math.Sqrt((xDiff * xDiff) + (yDiff * yDiff));
+                if (distance <= (ball.Diamiter + b.Diamiter))
+                {
+                    double newSpeed = b.speedX + (ball.speedX * 2);
+                    ball.speedX = ((ball.speedX + b.speedX * 2));
+                    b.speedX = newSpeed;
+
+                    newSpeed = b.speedY + (ball.speedY * 2);
+                    ball.speedY = ball.speedY + (b.speedY * 2);
+                    b.speedY = newSpeed;
+                }
+            }
+        }
 
         public override void Start(int ballCount)
         {
-            if (Table != null) Table.Clear();
-            for (int i = 0; i < ballCount; i++)
-            {
-                LogicBall ball = new LogicBall(dataLayer.generateBall());
-                Table.Add(ball);
-            }
+            dataLayer.Start(ballCount);
         }
     }
 }
