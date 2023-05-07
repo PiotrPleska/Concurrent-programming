@@ -48,8 +48,10 @@ namespace Data
             }
         }
 
-        double IBall.speedX { get => speedX; set => speedX = value; }
-        double IBall.speedY { get => speedY; set => speedY = value; }
+        double IBall.speedX { get => speedX; set => speedX = value;
+        }
+        double IBall.speedY { get => speedY; set => speedY = value;
+        }
 
         public void Dispose()
         {

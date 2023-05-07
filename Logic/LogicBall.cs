@@ -17,6 +17,7 @@ namespace Logic
         public event PropertyChangedEventHandler? PropertyChanged;
         private static DataAbstractApi API = DataAbstractApi.CreateApi();
         private IBall Ball = API.getBall();
+        private List<IBall> balls = Logic.dataLayerr.getBalls();
         double ILogicBall.X
         {
             get => x;
@@ -47,7 +48,7 @@ namespace Logic
             x = Ball.X;
             y = Ball.Y;
             borderColision(Ball);
-            //BallCollision(Ball);
+            BallCollision(Ball);
             RaisePropertyChanged();
         }
 
@@ -83,6 +84,29 @@ namespace Logic
 
         }
 
+        public void BallCollision(IBall ball)
+        {
+            foreach (IBall b in balls)
+            {
+                if (b == ball)
+                {
+                    continue;
+                }
+                double xDiff = b.X - ball.X;
+                double yDiff = b.Y - ball.Y;
+                double distance = Math.Sqrt((xDiff * xDiff) + (yDiff * yDiff));
+                if (distance <= (ball.Diamiter))
+                {
+                    double newSpeed = ball.speedX;
+                    ball.speedX = b.speedX;
+                    b.speedX = newSpeed;
+
+                    newSpeed = ball.speedY;
+                    ball.speedY = b.speedY;
+                    b.speedY = newSpeed;
+                }
+            }
+        }
 
 
     }
