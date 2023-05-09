@@ -1,11 +1,9 @@
 ﻿using Data;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
 
 namespace Logic
 {
     
-    internal class LogicBall : ILogicBall,INotifyPropertyChanged
+    internal class LogicBall : ILogicBall
 
     {
         private double x;
@@ -14,10 +12,13 @@ namespace Logic
         private double SpeedX;
         private double SpeedY;
 
-        public event PropertyChangedEventHandler? PropertyChanged;
+        public delegate void CoordinatesChangeEventHandler(object sender, CoordinatesChangeEventArgs e);
         private static DataAbstractApi API = DataAbstractApi.CreateApi();
         private IBall Ball = API.getBall();
         private List<IBall> balls = Logic.dataLayerr.getBalls();
+
+        public event ILogicBall.CoordinatesChangeEventHandler CoordinatesChanged;
+
         double ILogicBall.X
         {
             get => x;
@@ -40,7 +41,7 @@ namespace Logic
             x = ball.X;
             y = ball.Y;
             diameter = ball.Diamiter;
-            ball.PropertyChanged += UpdateCoordinates;
+            ball.CoordinatesChanged += UpdateCoordinates;
         }
 
         private void UpdateCoordinates(object sender, EventArgs e)
@@ -49,12 +50,12 @@ namespace Logic
             y = Ball.Y;
             borderColision(Ball);
             BallCollision(Ball);
-            RaisePropertyChanged();
+            OnCoordinatesChanged(new CoordinatesChangeEventArgs(x, y));
         }
 
-        protected virtual void RaisePropertyChanged([CallerMemberName] string propertyName = null)
+        protected virtual void OnCoordinatesChanged(CoordinatesChangeEventArgs e)
         {
-            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            CoordinatesChanged?.Invoke(this, e);
         }
 
         private void borderColision(IBall ball)

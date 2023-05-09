@@ -16,7 +16,7 @@ namespace Model
             this.x = ball.X;
             this.y = ball.Y;
             this.Diamiter = ball.Diamiter;
-            ball.PropertyChanged += UpdateCoordinates;
+            ball.CoordinatesChanged += UpdateCoordinates;
         }
 
 
@@ -45,7 +45,6 @@ namespace Model
             set => this.diameter = value;
         }
 
-        public double speed => throw new NotImplementedException();
 
         private void UpdateCoordinates(object sender, EventArgs e)
         {

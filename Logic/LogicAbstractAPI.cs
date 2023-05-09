@@ -1,10 +1,11 @@
 ﻿using Data;
-using System.ComponentModel;
 
 namespace Logic
 {
-    public interface ILogicBall : INotifyPropertyChanged
+    public interface ILogicBall
     {
+        public delegate void CoordinatesChangeEventHandler(object sender, CoordinatesChangeEventArgs e);
+        event CoordinatesChangeEventHandler CoordinatesChanged;
         public double X { get;}
         public double Y { get;  }
         public double Diamiter { get; }
@@ -13,6 +14,22 @@ namespace Logic
 
         public double speedY { get; }
     }
+
+    public class CoordinatesChangeEventArgs : EventArgs
+    {
+        public CoordinatesChangeEventArgs(double x, double y)
+        {
+            X = x;
+            Y = y;
+        }
+
+        public double X { get; internal set; }
+        public double Y { get; internal set; }
+
+
+
+    }
+
     public abstract class LogicAbstractApi : IDisposable
     {
         public static LogicAbstractApi CreateApi(DataAbstractApi abstractDataApi = null)

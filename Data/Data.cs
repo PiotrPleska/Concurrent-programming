@@ -1,5 +1,4 @@
-﻿using System.Net.Sockets;
-
+﻿
 namespace Data
 {
 
@@ -23,18 +22,20 @@ namespace Data
             Random random = new Random();
             Ball newBall = new Ball(random.Next(100, 400 - 100), random.Next(100, 400 - 100));
             this.ball = newBall;
-                Thread t = new Thread(() => {
-                    while (true) { 
-                        lock (locked)
-                        {
-                            newBall.Move();
-                        }
-
-                        Thread.Sleep(1);
+            Thread t = new Thread(() =>
+            {
+                while (true)
+                {
+                    lock (locked)
+                    {
+                        newBall.Move();
                     }
 
-                });
-                t.Start();
+                    Thread.Sleep(1);
+                }
+
+            });
+            t.Start();
             return newBall;
         }
 
@@ -44,9 +45,41 @@ namespace Data
             for (int i = 0; i < ballCount; i++)
             {
                 IBall newBall;
-                newBall = generateBall();
+                do
+                {
+                    newBall = generateBall();
+                }
+                while (CheckCollisions(ballList, newBall));
                 ballList.Add(newBall);
             }
+        }
+
+        private bool Overlap(IBall b1, IBall b2)
+        {
+            double xDiff = b1.X - b1.X;
+            double yDiff = b1.Y - b1.Y;
+            double distance = Math.Sqrt((xDiff * xDiff) + (yDiff * yDiff));
+            if (distance <= (b1.Diamiter))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        private bool CheckCollisions(List<IBall> balls, IBall b1)
+        {
+            for (int i = 0; i < balls.Count; i++)
+            {
+                if (balls[i] != b1) continue;
+                if (Overlap(balls[i], b1))
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
         public override List<IBall> getBalls()

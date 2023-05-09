@@ -9,7 +9,6 @@ namespace Model
         public double Y { get; }
         public double Diamiter { get; }
         
-        public double speed { get; }
     }
 
     public abstract class ModelAbstractApi : IDisposable

@@ -1,16 +1,19 @@
-﻿using System.ComponentModel;
-using System.Runtime.CompilerServices;
+﻿
 
 namespace Data
 {
-    internal class Ball : IBall, IDisposable, INotifyPropertyChanged
+    internal class Ball : IBall, IDisposable
     {
-        private Timer MoveTimer;
         private Random Random = new Random();
         private double YBackingField;
         private double XBackingField;
         private double speedX;
         private double speedY;
+        public delegate void CoordinatesChangeEventHandler(object sender, CoordinatesChangeEventArgs e);
+        public CoordinatesChangeEventHandler CoordinatesChangeHandler;
+        public event IBall.CoordinatesChangeEventHandler CoordinatesChanged;
+
+
         public Ball(double Y, double X)
         {
             XBackingField = X;
@@ -29,11 +32,11 @@ namespace Data
                 if (YBackingField == value)
                     return;
                 YBackingField = value;
-                RaisePropertyChanged();
+                OnCoordinatesChanged(new CoordinatesChangeEventArgs(X, Y));
             }
         }
 
-        public double Diamiter { get; set; }
+        public double Diamiter { get;}
 
 
         public double X
@@ -44,7 +47,7 @@ namespace Data
                 if (XBackingField == value)
                     return;
                 XBackingField = value;
-                RaisePropertyChanged();
+                OnCoordinatesChanged(new CoordinatesChangeEventArgs(X, Y));
             }
         }
 
@@ -55,19 +58,18 @@ namespace Data
 
         public void Dispose()
         {
-            MoveTimer?.Dispose();
+            
         }
         public void Move()
         {
             this.X += this.speedX;
             this.Y += this.speedY;
-            RaisePropertyChanged();
+            OnCoordinatesChanged(new CoordinatesChangeEventArgs(X, Y));
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
-        private void RaisePropertyChanged([CallerMemberName] string propertyName = "")
+        private void OnCoordinatesChanged(CoordinatesChangeEventArgs e)
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            CoordinatesChanged?.Invoke(this, e);
         }
 
     }
