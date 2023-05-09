@@ -12,7 +12,8 @@ namespace Logic
         internal Logic(DataAbstractApi dataLayer = null)
         {
 
-            dataLayerr = DataAbstractApi.CreateApi();
+            if (dataLayer != null) { dataLayerr = dataLayer; }
+            else { dataLayerr = DataAbstractApi.CreateApi(); }
 
         }
 

@@ -13,11 +13,14 @@ namespace Model
 
     public abstract class ModelAbstractApi : IDisposable
     {
-        public static ModelAbstractApi CreateApi(LogicAbstractApi logicLayer = null)
+        public static ModelAbstractApi CreateApi(LogicAbstractApi? logicLayer)
         {
             return new Model(logicLayer);
         }
-
+        public static ModelAbstractApi CreateApi()
+        {
+            return new Model();
+        }
         public abstract ObservableCollection<IModelBall> GetModelBalls();
 
         public abstract void Start(int ballCount);

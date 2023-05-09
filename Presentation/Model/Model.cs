@@ -11,7 +11,8 @@ namespace Model
 
         public Model(LogicAbstractApi logicAbstractAPI = null)
         {
-            this.logicLayer = LogicAbstractApi.CreateApi();
+            if (logicAbstractAPI != null) { logicLayer = logicAbstractAPI; }
+            else { logicLayer = LogicAbstractApi.CreateApi(); }
         }
 
 

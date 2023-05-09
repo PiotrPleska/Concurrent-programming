@@ -32,9 +32,13 @@ namespace Logic
 
     public abstract class LogicAbstractApi : IDisposable
     {
-        public static LogicAbstractApi CreateApi(DataAbstractApi abstractDataApi = null)
+        public static LogicAbstractApi CreateApi(DataAbstractApi? abstractDataApi)
         {
             return new Logic(abstractDataApi);
+        }
+        public static LogicAbstractApi CreateApi()
+        {
+            return new Logic();
         }
 
         public abstract ILogicBall getBall();
