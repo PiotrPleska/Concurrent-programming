@@ -19,10 +19,11 @@ namespace Data
             XBackingField = X;
             YBackingField = Y;
             Diamiter = 20;
-            speedX = Random.NextDouble();
-            speedY = Random.NextDouble();
+            speedX = Random.NextDouble()*6;
+            speedY = Random.NextDouble()*6;
         }
-
+        public double SpeedX { get { return speedX; } }
+        public double SpeedY { get { return speedY; } }
 
         public double Y
         {

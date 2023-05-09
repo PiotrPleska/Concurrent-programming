@@ -31,7 +31,9 @@ namespace Data
                         newBall.Move();
                     }
 
-                    Thread.Sleep(1);
+                    double vel = Math.Sqrt((newBall.SpeedX * newBall.SpeedX) + (newBall.SpeedY * newBall.SpeedY));
+
+                    Thread.Sleep((int)(100 / vel));
                 }
 
             });

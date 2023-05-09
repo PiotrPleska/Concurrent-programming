@@ -98,13 +98,17 @@ namespace Logic
                 double distance = Math.Sqrt((xDiff * xDiff) + (yDiff * yDiff));
                 if (distance <= (ball.Diamiter))
                 {
-                    double newSpeed = ball.speedX;
-                    ball.speedX = b.speedX;
-                    b.speedX = newSpeed;
+                    if ((ball.speedX - b.speedX) * (b.X - ball.X) + (ball.speedY - b.speedY) * (b.Y - ball.Y) >= 0)
+                    {
+                        double newSpeed = ball.speedX;
+                        ball.speedX = b.speedX;
+                        b.speedX = newSpeed;
 
-                    newSpeed = ball.speedY;
-                    ball.speedY = b.speedY;
-                    b.speedY = newSpeed;
+                        newSpeed = ball.speedY;
+                        ball.speedY = b.speedY;
+                        b.speedY = newSpeed;
+                    }
+
                 }
             }
         }
