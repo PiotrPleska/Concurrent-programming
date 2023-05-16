@@ -6,13 +6,7 @@ namespace Data
 
     internal class Data : DataAbstractApi
     {
-        private Ball ball;
         private List<IBall> ballList = new List<IBall>();
-
-        public override IBall getBall()
-        {
-            return ball;
-        }
 
         public override IBall generateBall()
         {
@@ -47,9 +41,10 @@ namespace Data
 
         private bool Overlap(IBall b1, IBall b2)
         {
-            double xDiff = b1.X - b1.X;
-            double yDiff = b1.Y - b1.Y;
-            double distance = Math.Sqrt((xDiff * xDiff) + (yDiff * yDiff));
+            //double xDiff = b1.X - b1.X;
+            Vector2D Diff = b1.Coordinates.Subtract(b2.Coordinates);
+            //double yDiff = b1.Y - b1.Y;
+            double distance = Math.Sqrt(Diff.Multiply());
             if (distance <= (b1.Diamiter))
             {
                 return true;
