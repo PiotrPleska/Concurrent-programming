@@ -19,28 +19,45 @@ namespace LogicTestSuit
         private double speedY;
         public delegate void CoordinatesChangeEventHandler(object sender, CoordinatesChangeEventArgs e);
         public CoordinatesChangeEventHandler CoordinatesChangeHandler;
+        private readonly object locked = new object();
         public event IBall.CoordinatesChangeEventHandler CoordinatesChanged;
+        private bool stop = false;
 
 
         public TestBall(double Y, double X)
         {
-            XBackingField = X;
-            YBackingField = Y;
-            Diamiter = 20;
-            speedX = Random.NextDouble();
-            speedY = Random.NextDouble();
-        }
+            this.XBackingField = X;
+            this.YBackingField = Y;
+            this.Diamiter = 20;
+            this.speedX = Random.NextDouble() * 6;
+            this.speedY = Random.NextDouble() * 6;
 
+            Thread t = new Thread(() =>
+            {
+                while (!stop)
+                {
+                    this.X += this.speedX;
+                    this.Y += this.speedY;
+                    OnCoordinatesChanged(new CoordinatesChangeEventArgs(X, Y));
+
+
+
+                    Thread.Sleep(10);
+
+                }
+
+            });
+            t.Start();
+        }
 
         public double Y
         {
             get { return YBackingField; }
-            set
+            private set
             {
                 if (YBackingField == value)
                     return;
                 YBackingField = value;
-                OnCoordinatesChanged(new CoordinatesChangeEventArgs(X, Y));
             }
         }
 
@@ -50,12 +67,11 @@ namespace LogicTestSuit
         public double X
         {
             get { return XBackingField; }
-            set
+            private set
             {
                 if (XBackingField == value)
                     return;
                 XBackingField = value;
-                OnCoordinatesChanged(new CoordinatesChangeEventArgs(X, Y));
             }
         }
 
@@ -70,13 +86,7 @@ namespace LogicTestSuit
 
         public void Dispose()
         {
-
-        }
-        public void Move()
-        {
-            this.X += this.speedX;
-            this.Y += this.speedY;
-            OnCoordinatesChanged(new CoordinatesChangeEventArgs(X, Y));
+            stop = true;
         }
 
         private void OnCoordinatesChanged(CoordinatesChangeEventArgs e)

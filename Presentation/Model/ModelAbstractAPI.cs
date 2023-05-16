@@ -1,12 +1,10 @@
-﻿using Data;
-using Logic;
+﻿using Logic;
 using System.Collections.ObjectModel;
 
 namespace Model
 {
     public interface IModelBall
     {
-        public Vector2D Coordinates { get; }
         public double X { get; }
         public double Y { get; }
         public double Diamiter { get; }

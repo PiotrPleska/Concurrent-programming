@@ -2,49 +2,46 @@
 
 namespace Logic
 {
-
+    
     internal class LogicBall : ILogicBall
 
     {
-        Vector2D coordinates;
-        private double diameter = 20;
-
-
+        private double x;
+        private double y;
+        private double diameter=20;
         private readonly object locked = new object();
 
 
         public delegate void CoordinatesChangeEventHandler(object sender, CoordinatesChangeEventArgs e);
         private static DataAbstractApi API = DataAbstractApi.CreateApi();
-        //private IBall Ball = API.getBall();
         private List<IBall> balls = Logic.dataLayerr.getBalls();
 
         public event ILogicBall.CoordinatesChangeEventHandler CoordinatesChanged;
 
+        double ILogicBall.X
+        {
+            get => x;
+        }
+
+        double ILogicBall.Y
+        {
+            get => y;
+        }
 
         public double Diamiter => diameter;
 
-        public Vector2D Coordinates => coordinates;
-
-        //double ILogicBall.speedX => SpeedX;
-
-        //double ILogicBall.speedY => SpeedY;
 
         public LogicBall(IBall ball)
-        {
-            //this.Ball = ball;
-            //x = ball.X;
-            //y = ball.Y;
-            //diameter = ball.Diamiter;
+        {   
+            
             ball.CoordinatesChanged += UpdateCoordinates;
         }
 
         private void UpdateCoordinates(object sender, EventArgs e)
         {
-            //x = Ball.X;
-            //y = Ball.Y;
-
             IBall Ball = (IBall)sender;
-            coordinates = Ball.Coordinates;
+            this.x = Ball.X;
+            this.y = Ball.Y;
 
             borderColision(Ball);
             lock (locked){
@@ -52,7 +49,7 @@ namespace Logic
             }
 
 
-            OnCoordinatesChanged(new CoordinatesChangeEventArgs(coordinates));
+            OnCoordinatesChanged(new CoordinatesChangeEventArgs(x, y));
         }
 
         protected virtual void OnCoordinatesChanged(CoordinatesChangeEventArgs e)
@@ -64,39 +61,26 @@ namespace Logic
         {
 
 
-            //if ((x + diameter) >= 395)
-            //{
-            //    ball.speedX = -ball.speedX;
-            //    x = 395 - diameter;
-            //}
-            //if ((y + diameter) >= 415)
-            //{
-            //    ball.speedY = -ball.speedY;
-            //    y = 415 - diameter;
-            //}
-
-            if(coordinates.Add(diameter, diameter) >= new Vector2D(395, 415))
+            if ((x + diameter) >= 395)
             {
-                ball.Speed = -ball.Speed;
-                coordinates = new Vector2D(395 - diameter, 415 - diameter);
+                ball.speedX = -ball.speedX;
+                x = 395 - diameter;
             }
-
-            //if ((x - diameter) <= -20)
-            //{
-            //    ball.speedX = -ball.speedX;
-            //    x = diameter;
-            //}
-            //if ((y - diameter) <= -20)
-            //{
-            //    ball.speedY = -ball.speedY;
-            //    y = diameter;
-            //}
-            if (coordinates.SubractScalar(diameter, diameter) <= new Vector2D(-20, -20))
+            if ((x - diameter) <= -20)
             {
-                ball.Speed = -ball.Speed;
-                coordinates = new Vector2D(diameter,diameter);
+                ball.speedX = -ball.speedX;
+                x = diameter;
             }
-
+            if ((y + diameter) >= 415)
+            {
+                ball.speedY = -ball.speedY;
+                y = 415 - diameter;
+            }
+            if ((y - diameter) <= -20)
+            {
+                ball.speedY = -ball.speedY;
+                y = diameter;
+            }
 
         }
 
@@ -108,29 +92,25 @@ namespace Logic
                 {
                     continue;
                 }
-                Vector2D Diff = b.Coordinates.Subtract(ball.Coordinates);
-                double distance = Math.Sqrt(Diff.Multiply());
+                double xDiff = b.X - ball.X;
+                double yDiff = b.Y - ball.Y;
+                double distance = Math.Sqrt((xDiff * xDiff) + (yDiff * yDiff));
                 if (distance <= (ball.Diamiter))
                 {
-                    if (Vector2D.CheckCollision(ball.Coordinates,b.Coordinates))
+                    if ((ball.speedX - b.speedX) * (b.X - ball.X) + (ball.speedY - b.speedY) * (b.Y - ball.Y) >= 0)
                     {
-                        //double newSpeed = ball.speedX;
-                        //ball.speedX = b.speedX;
-                        //b.speedX = newSpeed;
+                        double newSpeed = ball.speedX;
+                        ball.speedX = b.speedX;
+                        b.speedX = newSpeed;
 
-                        //newSpeed = ball.speedY;
-                        //ball.speedY = b.speedY;
-                        //b.speedY = newSpeed;
-
-                        Vector2D temp = ball.Speed;
-                        ball.Speed = b.Speed;
-                        b.Speed = temp;
+                        newSpeed = ball.speedY;
+                        ball.speedY = b.speedY;
+                        b.speedY = newSpeed;
                     }
 
                 }
             }
         }
-
 
 
     }

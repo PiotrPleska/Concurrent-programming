@@ -22,15 +22,7 @@ namespace DataTestSuit
             Assert.IsNotNull(ball.X);
             Assert.IsNotNull(ball.Y);
             Assert.IsNotNull(ball.Diamiter);
-        }
-
-        [TestMethod]
-        public void GetBallTest()
-        {
-            IBall ball = API.generateBall();
-            IBall ball2 = API.getBall();
-            Assert.AreEqual(ball, ball2);
-        }
+        }  
 
         [TestMethod]
         public void BallsRandomStartingCoordinatesTest()

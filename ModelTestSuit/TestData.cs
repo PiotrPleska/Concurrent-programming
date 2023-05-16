@@ -9,40 +9,24 @@ namespace ModelTestSuit
 {
     internal class TestData : DataAbstractApi
     {
-        private TestBall ball;
         private List<IBall> ballList = new List<IBall>();
-        private readonly object locked = new object();
-        public override IBall getBall()
-        {
-            return ball;
-        }
 
-        public override void Dispose()
-        {
-            ball?.Dispose();
-        }
 
         public override IBall generateBall()
         {
             Random random = new Random();
             TestBall newBall = new TestBall(random.Next(100, 400 - 100), random.Next(100, 400 - 100));
-            this.ball = newBall;
-            Thread t = new Thread(() =>
-            {
-                while (true)
-                {
-                    lock (locked)
-                    {
-                        newBall.Move();
-                    }
-
-                    Thread.Sleep(1);
-                }
-
-            });
-            t.Start();
             return newBall;
         }
+
+        public override void Dispose()
+        {
+            foreach (IBall ball in ballList)
+            {
+                ball.Dispose();
+            }
+        }
+
 
         public override void Start(int ballCount)
         {

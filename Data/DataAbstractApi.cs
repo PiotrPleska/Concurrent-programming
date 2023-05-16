@@ -7,21 +7,25 @@ namespace Data
     {
         public delegate void CoordinatesChangeEventHandler(object sender, CoordinatesChangeEventArgs e);
         event CoordinatesChangeEventHandler CoordinatesChanged;
-        Vector2D Coordinates { get;}
+        double X { get;}
+        double Y { get; }
         double Diamiter { get; }
-        Vector2D Speed { get; set; }
+        double speedX { get; set; }
+        double speedY { get; set; }
         public void Dispose();
     }
 
     public class CoordinatesChangeEventArgs : EventArgs
     {
 
-        public CoordinatesChangeEventArgs(Vector2D vector2D)
+        public CoordinatesChangeEventArgs(double x, double y)
         {
-            Vector2D = vector2D;
+            X = x;
+            Y = y;
         }
 
-        public Vector2D Vector2D { get; internal set; } 
+        public double X { get; internal set; } 
+        public double Y { get; internal set; }
 
 
 
@@ -35,7 +39,6 @@ namespace Data
             Data data = new Data();
             return data;
         }
-
         public abstract IBall generateBall();
 
         public abstract List<IBall> getBalls();
