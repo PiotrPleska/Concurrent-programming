@@ -11,6 +11,8 @@ namespace Logic
         private double diameter;
         private double SpeedX;
         private double SpeedY;
+        private readonly object locked = new object();
+
 
         public delegate void CoordinatesChangeEventHandler(object sender, CoordinatesChangeEventArgs e);
         private static DataAbstractApi API = DataAbstractApi.CreateApi();
@@ -48,8 +50,13 @@ namespace Logic
         {
             x = Ball.X;
             y = Ball.Y;
+
             borderColision(Ball);
-            BallCollision(Ball);
+            lock (locked){
+                BallCollision(Ball);
+            }
+
+
             OnCoordinatesChanged(new CoordinatesChangeEventArgs(x, y));
         }
 

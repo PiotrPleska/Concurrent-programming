@@ -57,6 +57,10 @@ namespace ViewModel
             SGModelBallsList = ModelLayer.GetModelBalls();
             RaisePropertyChanged("SGModelBallsList");
         }
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            ModelLayer.Dispose();
+        }
 
         public void Dispose()
         {

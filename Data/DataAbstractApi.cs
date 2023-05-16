@@ -12,6 +12,7 @@ namespace Data
         double Diamiter { get; }
         double speedX { get; set; }
         double speedY { get; set; }
+        public void Dispose();
     }
 
     public class CoordinatesChangeEventArgs : EventArgs
@@ -47,6 +48,7 @@ namespace Data
         public abstract void Dispose();
 
         public abstract void Start(int ballCount);
+        
 
     }
 

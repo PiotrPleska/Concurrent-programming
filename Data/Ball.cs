@@ -1,5 +1,7 @@
 ﻿
 
+using System.Net.Sockets;
+
 namespace Data
 {
     internal class Ball : IBall, IDisposable
@@ -11,16 +13,40 @@ namespace Data
         private double speedY;
         public delegate void CoordinatesChangeEventHandler(object sender, CoordinatesChangeEventArgs e);
         public CoordinatesChangeEventHandler CoordinatesChangeHandler;
+        private readonly object locked = new object();
         public event IBall.CoordinatesChangeEventHandler CoordinatesChanged;
+        private bool stop = false;
 
 
         public Ball(double Y, double X)
         {
-            XBackingField = X;
-            YBackingField = Y;
-            Diamiter = 20;
-            speedX = Random.NextDouble()*6;
-            speedY = Random.NextDouble()*6;
+            this.XBackingField = X;
+            this.YBackingField = Y;
+            this.Diamiter = 20;
+            this.speedX = Random.NextDouble()*6;
+            this.speedY = Random.NextDouble()*6; 
+            double vel;
+
+            Thread t = new Thread(() =>
+            {
+                while (!stop)
+                {
+                    this.X += this.speedX;
+                    this.Y += this.speedY;
+                    OnCoordinatesChanged(new CoordinatesChangeEventArgs(X, Y));
+
+
+                    lock (locked)
+                    {
+                        vel = Math.Sqrt((SpeedX * SpeedX) + (SpeedY * SpeedY));
+                    }
+
+                    Thread.Sleep((int)(100 / vel));
+
+                }
+
+            });
+            t.Start();
         }
         public double SpeedX { get { return speedX; } }
         public double SpeedY { get { return speedY; } }
@@ -59,20 +85,13 @@ namespace Data
 
         public void Dispose()
         {
-            
-        }
-        public void Move()
-        {
-            this.X += this.speedX;
-            this.Y += this.speedY;
-            OnCoordinatesChanged(new CoordinatesChangeEventArgs(X, Y));
+            stop = true;
         }
 
         private void OnCoordinatesChanged(CoordinatesChangeEventArgs e)
         {
             CoordinatesChanged?.Invoke(this, e);
         }
-
     }
 }
 

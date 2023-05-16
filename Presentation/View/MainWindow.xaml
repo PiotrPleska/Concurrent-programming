@@ -6,7 +6,8 @@
         xmlns:viewModel="clr-namespace:ViewModel;assembly=ViewModel"
         xmlns:local="clr-namespace:View"
         mc:Ignorable="d"
-       Title="Presentation layer targeting reactive behaviour" Height="auto" Width="auto">
+       Title="Concurrent Programming" Height="auto" Width="auto">
+
 
     <Grid>
         <Grid.DataContext>

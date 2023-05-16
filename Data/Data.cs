@@ -1,4 +1,6 @@
 ﻿
+using System.Net.Security;
+
 namespace Data
 {
 
@@ -6,40 +8,27 @@ namespace Data
     {
         private Ball ball;
         private List<IBall> ballList = new List<IBall>();
-        private readonly object locked = new object();
+
         public override IBall getBall()
         {
             return ball;
-        }
-
-        public override void Dispose()
-        {
-            ball?.Dispose();
         }
 
         public override IBall generateBall()
         {
             Random random = new Random();
             Ball newBall = new Ball(random.Next(100, 400 - 100), random.Next(100, 400 - 100));
-            this.ball = newBall;
-            Thread t = new Thread(() =>
-            {
-                while (true)
-                {
-                    lock (locked)
-                    {
-                        newBall.Move();
-                    }
-
-                    double vel = Math.Sqrt((newBall.SpeedX * newBall.SpeedX) + (newBall.SpeedY * newBall.SpeedY));
-
-                    Thread.Sleep((int)(100 / vel));
-                }
-
-            });
-            t.Start();
             return newBall;
         }
+
+        public override void Dispose()
+        {
+            foreach (IBall ball in ballList)
+            {
+                ball.Dispose();
+            }
+        }
+
 
         public override void Start(int ballCount)
         {
