@@ -106,6 +106,8 @@ namespace Logic
                         newSpeed = ball.speedY;
                         ball.speedY = b.speedY;
                         b.speedY = newSpeed;
+                        API.PosToWrite(ball, ball.X, ball.Y);
+                        API.PosToWrite(b, b.X, b.Y);
                     }
 
                 }

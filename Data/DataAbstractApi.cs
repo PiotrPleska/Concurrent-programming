@@ -46,8 +46,8 @@ namespace Data
         public abstract void Dispose();
 
         public abstract void Start(int ballCount);
-        
 
+        public abstract void PosToWrite(IBall ball, double x, double y);
     }
 
 

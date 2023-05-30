@@ -44,5 +44,7 @@ namespace Logic
         public abstract void Start(int ballCount);
         public abstract void Dispose();
 
+
+
     }
 }

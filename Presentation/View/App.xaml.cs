@@ -1,4 +1,6 @@
-﻿using System.Windows;
+﻿using System;
+using System.IO;
+using System.Windows;
 
 namespace View
 {
@@ -7,5 +9,6 @@ namespace View
     /// </summary>
     public partial class App : Application
     {
+
     }
 }
