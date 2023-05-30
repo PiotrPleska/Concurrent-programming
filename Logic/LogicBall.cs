@@ -40,11 +40,11 @@ namespace Logic
         private void UpdateCoordinates(object sender, EventArgs e)
         {
             IBall Ball = (IBall)sender;
-            this.x = Ball.X;
-            this.y = Ball.Y;
-
             borderColision(Ball);
-            lock (locked){
+            lock (locked)
+            {
+                this.x = Ball.X;
+                this.y = Ball.Y;
                 BallCollision(Ball);
             }
 
