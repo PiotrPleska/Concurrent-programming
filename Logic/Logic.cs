@@ -19,8 +19,12 @@ namespace Logic
 
 
         public override void Dispose()
-        {
-            dataLayerr?.Dispose();
+        { 
+            foreach (ILogicBall b in Table)
+            {
+                b.Dispose();
+            }
+            dataLayerr.Dispose();
         }
 
         public override ILogicBall getBall()

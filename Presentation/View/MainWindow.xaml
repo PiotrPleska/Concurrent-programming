@@ -1,10 +1,10 @@
-﻿<Window x:Class="View.MainWindow"
+﻿<Window x:Class="ViewModel.MainWindowViewModel"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:viewModel="clr-namespace:ViewModel;assembly=ViewModel"
-        xmlns:local="clr-namespace:View"
+        xmlns:local="clr-namespace:View" d:DataContext="{d:DesignInstance Type=viewModel:MainWindowViewModel}"
         mc:Ignorable="d"
        Title="Concurrent Programming" Height="auto" Width="auto">
 
@@ -15,7 +15,10 @@
         </Grid.DataContext>
         <StackPanel  Background="#DCDCDC">
             <TextBox x:Name="NumberInput" Width="120" FontSize="24" Text="{Binding BallCount}" />
-            <Button Content="Submit"  Width="60" Height="43" Command="{Binding Sig}"/>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <Button Content="Submit"  Width="60" Height="43" Command="{Binding Sig}"/>
+                <Button Content="Stop"  Width="60" Height="43" Command="{Binding SigStop}"/>
+            </StackPanel>
         </StackPanel>
         <Border BorderThickness="5" BorderBrush="Green" Margin="0 85 0 0" Height="420" Width="400">
             <ItemsControl ItemsSource="{Binding SGModelBallsList}">
@@ -29,7 +32,7 @@
 
                     <DataTemplate>
                         <Canvas>
-                        <Ellipse Fill="Red" Width="{Binding Diamiter}" Height="{Binding Diamiter}" />
+                            <Ellipse Fill="Red" Width="{Binding Diamiter}" Height="{Binding Diamiter}" />
                             <Canvas.Left>
                                 <Binding Path="X" />
                             </Canvas.Left>

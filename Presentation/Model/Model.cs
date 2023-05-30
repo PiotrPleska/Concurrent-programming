@@ -41,7 +41,7 @@ namespace Model
 
         public override void Dispose()
         {
-            logicLayer?.Dispose();
+            logicLayer.Dispose();
         }
 
         public override void Start(int ballCount)

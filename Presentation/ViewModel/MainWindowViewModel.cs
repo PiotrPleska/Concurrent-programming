@@ -33,10 +33,13 @@ namespace ViewModel
 
         public ICommand Sig { get; set; }
 
+        public ICommand SigStop { get; set; }
+
 
         public MainWindowViewModel(ModelAbstractApi ModelApi = null)
         {
             Sig = new RelayCommand(start);
+            SigStop = new RelayCommand(Dispose);
             this.ModelLayer = ModelAbstractApi.CreateApi();
         }
 
@@ -56,10 +59,6 @@ namespace ViewModel
             ModelLayer.Start(ballCount);
             SGModelBallsList = ModelLayer.GetModelBalls();
             RaisePropertyChanged("SGModelBallsList");
-        }
-        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
-        {
-            ModelLayer.Dispose();
         }
 
         public void Dispose()

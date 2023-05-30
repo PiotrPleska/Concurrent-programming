@@ -14,6 +14,7 @@ namespace Data
         private List<IBall> ballList = new List<IBall>();
         Stopwatch stopWatch = new Stopwatch();
         private static ConcurrentQueue<string> queue = new ConcurrentQueue<string>();
+        private bool stop = false;
 
 
         public override IBall generateBall()
@@ -25,9 +26,15 @@ namespace Data
 
         public override void Dispose()
         {
-            foreach (IBall ball in ballList)
+            stop = true;
+            string data = "}}";
+            queue.Enqueue(data);
+            using (StreamWriter sw = File.AppendText("../../../../../output.json"))
             {
-                ball.Dispose();
+                while (queue.TryDequeue(out string line))
+                {
+                    sw.WriteLine(line);
+                };
             }
         }
 
@@ -122,7 +129,7 @@ namespace Data
         {
             Thread t = new Thread(() =>
             {
-                while (true)
+                while (!stop)
                 {
                     using (StreamWriter sw = File.AppendText("../../../../../output.json"))
                     {
@@ -131,6 +138,7 @@ namespace Data
                             sw.WriteLine(line);
                         }
                         sw.Flush();
+                        sw.Close ();
                         Thread.Sleep(100);
 
                     }

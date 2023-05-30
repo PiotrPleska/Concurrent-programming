@@ -4,7 +4,8 @@ using System.Net.Sockets;
 
 namespace Data
 {
-    internal class Ball : IBall, IDisposable
+
+    internal class Ball : IBall
     {
         private Random Random = new Random();
         private double YBackingField;
@@ -13,7 +14,6 @@ namespace Data
         private double speedY;
         public delegate void CoordinatesChangeEventHandler(object sender, CoordinatesChangeEventArgs e);
         public CoordinatesChangeEventHandler CoordinatesChangeHandler;
-        private readonly object locked = new object();
         public event IBall.CoordinatesChangeEventHandler CoordinatesChanged;
         private bool stop = false;
 
@@ -39,7 +39,7 @@ namespace Data
                     Thread.Sleep(10);
 
                 }
-
+                
             });
             t.Start();
         }
@@ -74,14 +74,14 @@ namespace Data
         double IBall.speedY { get => speedY; set => speedY = value;
         }
 
-        public void Dispose()
-        {
-            stop = true;
-        }
-
         private void OnCoordinatesChanged(CoordinatesChangeEventArgs e)
         {
             CoordinatesChanged?.Invoke(this, e);
+        }
+
+        public void Dispose()
+        {
+            stop = true;
         }
     }
 }

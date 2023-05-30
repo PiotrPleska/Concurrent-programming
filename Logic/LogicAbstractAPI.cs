@@ -9,6 +9,7 @@ namespace Logic
         public double X { get;}
         public double Y { get;  }
         public double Diamiter { get; }
+        public void Dispose();
     }
 
     public class CoordinatesChangeEventArgs : EventArgs

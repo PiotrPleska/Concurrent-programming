@@ -84,6 +84,14 @@ namespace Logic
 
         }
 
+        public void Dispose()
+        {
+            foreach (IBall ball in balls) 
+            { 
+                ball.Dispose();
+            }
+        }
+
         public void BallCollision(IBall ball)
         {
             foreach (IBall b in balls)
