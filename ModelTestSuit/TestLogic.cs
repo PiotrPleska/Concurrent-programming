@@ -25,13 +25,13 @@ namespace ModelTestSuit
 
         public override void Dispose()
         {
-            dataLayerr?.Dispose();
+            foreach (ILogicBall b in Table)
+            {
+                b.Dispose();
+            }
+            dataLayerr.Dispose();
         }
 
-        public override ILogicBall getBall()
-        {
-            return LogicBall;
-        }
 
         public override List<ILogicBall> GetBalls()
         {

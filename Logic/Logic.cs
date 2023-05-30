@@ -24,13 +24,10 @@ namespace Logic
             {
                 b.Dispose();
             }
+            Table.Clear();
             dataLayerr.Dispose();
         }
 
-        public override ILogicBall getBall()
-        {
-            return LogicBall;
-        }
 
         public override  List<ILogicBall> GetBalls()
         {

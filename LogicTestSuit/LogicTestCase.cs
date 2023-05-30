@@ -49,5 +49,6 @@ namespace LogicTestSuit
                 Assert.IsNotNull(ball);
             }
         }
+        
     }
 }

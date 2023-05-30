@@ -1,9 +1,12 @@
-﻿using Data;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+
+using Data;
+using Logic;
+using CoordinatesChangeEventArgs = Data.CoordinatesChangeEventArgs;
 
 namespace ModelTestSuit
 {
@@ -81,14 +84,14 @@ namespace ModelTestSuit
             get => speedY; set => speedY = value;
         }
 
-        public void Dispose()
-        {
-            stop = true;
-        }
-
         private void OnCoordinatesChanged(CoordinatesChangeEventArgs e)
         {
             CoordinatesChanged?.Invoke(this, e);
+        }
+
+        public void Dispose()
+        {
+            stop = true;
         }
     }
 }

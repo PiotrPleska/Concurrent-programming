@@ -27,6 +27,7 @@ namespace Data
         public override void Dispose()
         {
             stop = true;
+            ballList.Clear();
             string data = "}}";
             queue.Enqueue(data);
             using (StreamWriter sw = File.AppendText("../../../../../output.json"))
@@ -98,19 +99,19 @@ namespace Data
             string time = timeSpan.ToString();
             string id = ball.GetHashCode().ToString();
 
-            var data = new Dictionary<string, string>
+            var jsonObject = new
             {
-                { "X", x.ToString() },
-                { "Y", y.ToString() },
-                { "Time", time.ToString() }
+                X = x.ToString(),
+                Y = y.ToString(),
+                Time = time.ToString()
             };
 
-            var json = new Dictionary<string, object>
+            var jsonDictionary = new Dictionary<string, object>
             {
-                { id, data }
+                { id, jsonObject }
             };
 
-            string jsonString = JsonConvert.SerializeObject(json);
+            string jsonString = JsonConvert.SerializeObject(jsonDictionary, Formatting.Indented);
 
             queue.Enqueue(jsonString);
         }
@@ -119,7 +120,7 @@ namespace Data
         {
             FileStream file = File.Create("../../../../../output.json");
             StreamWriter sw = new StreamWriter(file);
-            string data = "{TableWidth: 400, TableHeight: 420, BallsCount: \"" + ballCount + ", BallsDiameter: 20, balls: {";
+            string data = "{\"TableWidth\": 400, \"TableHeight\": 420, \"BallsCount\":" + ballCount + ", \"BallsDiameter\": 20, \"balls\": {";
             sw.WriteLine(data);
             sw.Flush();
             sw.Close();

@@ -38,8 +38,6 @@ namespace Logic
             return new Logic();
         }
 
-        public abstract ILogicBall getBall();
-
         public abstract  List<ILogicBall> GetBalls();
 
         public abstract void Start(int ballCount);

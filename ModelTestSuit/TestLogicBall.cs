@@ -13,7 +13,7 @@ namespace ModelTestSuit
     {
         private double x;
         private double y;
-        private double diameter = 20;
+        private double diameter=20;
         private readonly object locked = new object();
 
 
@@ -37,8 +37,8 @@ namespace ModelTestSuit
 
 
         public TestLogicBall(IBall ball)
-        {
-
+        {   
+            
             ball.CoordinatesChanged += UpdateCoordinates;
         }
 
@@ -49,8 +49,7 @@ namespace ModelTestSuit
             this.y = Ball.Y;
 
             borderColision(Ball);
-            lock (locked)
-            {
+            lock (locked){
                 BallCollision(Ball);
             }
 
@@ -90,6 +89,14 @@ namespace ModelTestSuit
 
         }
 
+        public void Dispose()
+        {
+            foreach (IBall ball in balls) 
+            { 
+                ball.Dispose();
+            }
+        }
+
         public void BallCollision(IBall ball)
         {
             foreach (IBall b in balls)
@@ -112,6 +119,8 @@ namespace ModelTestSuit
                         newSpeed = ball.speedY;
                         ball.speedY = b.speedY;
                         b.speedY = newSpeed;
+                        API.PosToWrite(ball, ball.X, ball.Y);
+                        API.PosToWrite(b, b.X, b.Y);
                     }
 
                 }

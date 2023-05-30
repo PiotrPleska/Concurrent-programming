@@ -84,14 +84,14 @@ namespace LogicTestSuit
             get => speedY; set => speedY = value;
         }
 
-        public void Dispose()
-        {
-            stop = true;
-        }
-
         private void OnCoordinatesChanged(CoordinatesChangeEventArgs e)
         {
             CoordinatesChanged?.Invoke(this, e);
+        }
+
+        public void Dispose()
+        {
+            stop = true;
         }
     }
 }
